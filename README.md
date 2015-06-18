@@ -85,12 +85,12 @@ config.react.jsx_transform_options = {
 }
 ```
 
-To use CoffeeScript, create `.js.jsx.coffee` files and embed JSX inside backticks, for example:
+To use CoffeeScript with CJSX(Coffeescript JSX), create `.coffee.cjsx` files, for example:
 
 ```coffee
 Component = React.createClass
   render: ->
-    `<ExampleComponent videos={this.props.videos} />`
+    <ExampleComponent videos={@props.videos} />
 ```
 
 ### Rendering & mounting
@@ -242,12 +242,12 @@ json.messages(@messages) do |message|
 end
 ```
 
-## CoffeeScript
+## CoffeeScript with CJSX
 
 It is possible to use JSX with CoffeeScript. We need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
 
 ```coffee
 Component = React.createClass
   render: ->
-    `<ExampleComponent videos={this.props.videos} />`
+    <ExampleComponent videos={@props.videos} />
 ```

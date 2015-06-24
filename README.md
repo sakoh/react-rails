@@ -85,13 +85,36 @@ config.react.jsx_transform_options = {
 }
 ```
 
-To use CoffeeScript, create `.js.jsx.coffee` files and embed JSX inside backticks, for example:
+To use CoffeeScript and CJSX(CoffeeScript JSX), create `.coffee.cjsx` files, for example:
 
 ```coffee
 Component = React.createClass
   render: ->
-    `<ExampleComponent videos={this.props.videos} />`
+    <ExampleComponent videos={this.props.videos} />
 ```
+
+Also make sure to wrap your CJSX markup in a `div` if you are render more than one line in a component or it will only return the last line, for example:
+
+```coffee
+#BAD
+Component = React.create
+  render: ->
+    <h2>Hello World</h2>
+    <p>Hello Program</p>
+# only returns <p>Hello Program</p>
+```
+
+```coffee
+#GOOD
+Component = React.create
+  render: ->
+    <div>
+      <h2>Hello World</h2>
+      <p>Hello Program</p>
+    </div>
+# renders the whole markup
+```
+
 
 ### Rendering & mounting
 
@@ -142,13 +165,13 @@ _(It will be also be mounted by the UJS on page load.)_
 There are some requirements for this to work:
 
 - `react-rails` must load your code. By convention it uses `components.js`, which was created by the install task. This file must include your components _and_ their dependencies (eg, Underscore.js).
-- Your components must be accessible in the global scope. If you are using `.js.jsx.coffee` files then the wrapper function needs to be taken into account:
+- Your components must be accessible in the global scope. If you are using `.coffee.cjsx` files then the wrapper function needs to be taken into account:
 
   ```coffee
   # @ is `window`:
   @Component = React.createClass
     render: ->
-      `<ExampleComponent videos={this.props.videos} />`
+      <ExampleComponent videos={this.props.videos} />
   ```
 - Your code can't reference `document`. Prerender processes don't have access to `document`, so jQuery and some other libs won't work in this environment :(
 
@@ -244,10 +267,10 @@ end
 
 ## CoffeeScript
 
-It is possible to use JSX with CoffeeScript. We need to embed JSX inside backticks so CoffeeScript ignores the syntax it doesn't understand. Here's an example:
+You can now use cjsx out of the box with React Rails:
 
 ```coffee
 Component = React.createClass
   render: ->
-    `<ExampleComponent videos={this.props.videos} />`
+    <ExampleComponent videos={this.props.videos} />
 ```
